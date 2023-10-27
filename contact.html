@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Foodie Delight</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation Bar  -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Foodie Delight</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="menu.html">Menu</a>
+                </li>
+               
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contact Section with Contact Form -->
+    <div class="container mt-5">
+        <h2>Contact Us</h2>
+        <p>Have a question or feedback? Feel free to contact us!</p>
+        <form id="contact-form">
+            <div class="form-group mb-3">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                <div class="invalid-feedback">Please enter your name.</div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="message">Message:</label>
+                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                <div class="invalid-feedback">Please enter your message.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Check if local storage is available
+        if (typeof (Storage) !== "undefined") {
+            // Add an event listener for form submission
+            document.getElementById("contact-form").addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent the form from submitting normally
+
+                // Get the form input values
+                var name = document.getElementById("name").value;
+                var email = document.getElementById("email").value;
+                var message = document.getElementById("message").value;
+
+                // Validate the form data
+                if (!name || !email || !message) {
+                    alert("Please fill in all required fields.");
+                    return;
+                }
+
+                // Add email validation
+                if (!validateEmail(email)) {
+                    alert("Please enter a valid email address.");
+                    return;
+                }
+
+                // Create an object to store the form data
+                var formData = {
+                    name: name,
+                    email: email,
+                    message: message
+                };
+
+                // Convert the object to a JSON string and store it in local storage
+                localStorage.setItem("contactData", JSON.stringify(formData));
+
+                // Reset the form
+                document.getElementById("contact-form").reset();
+
+                alert("Data saved to local storage!");
+            });
+
+            function validateEmail(email) {
+                // Basic email validation using a regular expression
+                var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+                return emailPattern.test(email);
+            }
+        } else {
+            // Local storage is not available
+            alert("Local storage is not supported by your browser.");
+        }
+    </script>
+</body>
+
+</html>
